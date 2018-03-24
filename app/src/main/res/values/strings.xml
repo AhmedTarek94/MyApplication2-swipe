@@ -1,0 +1,105 @@
+<resources>
+    <string name="app_name">MTC_SWIPE</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="app">MTC_SWIPE</string>
+
+    <string name="mtc_brief">
+Prior to 1958, Egypt had long been without technological military educational facilities. Therefore, the Military Technical College (MTC)
+        was established to aid fulfilling one the basic principles of the 23rd of July revolution; “to build a strong Egyptian army“. As a milestone
+in building this army, the role of recent technologies and modern trends in armament came to mind. Thus, the idea of establishing a technical
+        military academy became essential to supply the newborn army with engineers who constitute its technical mind.
+Having failed to obtain weapons from the west to rebuild the army on the basis of modern systems, the idea of MTC establishment came up following
+        an armament deal with (the former) Czechoslovakia Republic in 1954. The need to establish the MTC was conceived,
+ as a means to provide this new army with engineering professionals capable of coping and developing modern armament equipment and secure the
+        technical support. MTC was established in 1958 in cooperation with Military Academy in Brno, Czechoslovakia, to fullfill this need.
+Therefore, in October 27th 1957 the Chief of Staff of the Egyptian Armed Forces issued the decree number #344 that stated: “In compliance with
+        directions from the Egyptian leaderships, and studies launched by the Armed Forces to establish a scientific military college
+to fullfill the army\'s need for professional engineers. So the Army will no longer rely on foreign experts and conduct, independently, the
+        researches and technical activities reaching the target of creating the required generation”. In November 17th 1958, the
+organizational order was issued, allowing distinguished officers from Armed Forces to start their studies at the MTC. The study was divided
+        into two stages. The first stage, the medium stage, lasted for two years. Meanwhile, the second stage, the advanced stage,
+lasted for three years. In addition to the study stages, the organizational order included the requirements of admission, scientific branches,
+        as well as the duties of the graduates.
+In 1958, the Military College for Science was established and occupied Abd El-Rehiem Sabry Palace in Dokky, Cairo.
+The Military College for Science became the Military Technical College (MTC) according to the re-organizational instructions, issued on September 7th, 1959.
+The College started to qualify its own Egyptian teaching staff at 1960. The early groups were sent to the Czechoslovak Military Academy to get their Ph.D.
+        degrees in different specializations of the college during the period 1964-1975. The following groups were sent
+        to distinguished universities in France, UK, USA, Canada, Russia and China, since 1977. By 1978, the role of the Czechoslovak faculty members came
+        to an end, and the college started to rely entirely on its own staff. In 1978 the college was assigned the mission
+        to start graduate studies for the professional officers of the Egyptian Armed Forces. Several Ph.D. and M.Sc. degrees as well as graduate professional
+        diplomas have already been awarded. Thousands of B.Sc. engineering officers graduated from the Military Technical College.
+        Considering the cooperation among Egypt, Arab, and African countries; there were foreign cadets who graduated and finished their graduate studies in M.T.C.
+\n\n
+        Objectives\n
+\n MTC is considered one of the distinguished scientific research centers of the Armed Forces. MTC is specialized in the fields of military sciences and technology. As a reference in the military technical applications, MTC is in charge of:
+Graduation of MTC engineering officers of scientific, practical and organizational capabilities to undertake the technical and engineering missions. Qualification of distinguished officers to conduct scientific research innovation in diverse engineering and technological fields so as to help the Armed Forces modernize the armament systems and support critical and advanced technologies
+Directing the scientific and technical post graduate studies in compliance with the needs of the Armed Forces. Awarding the Diploma, M.Sc., and Ph.D. degrees in the engineering and scientific fields.
+Qualification and preparation of officers to work as staff members.
+Conducting academic and applied researches in relation to fields of studies and researches in accordance with the general strategies of the Armed Forces technical researches.
+Conducting new studies that fulfill the needs of Armed Forces. Proposing new engineering and technological solutions that promote the capabilities of the military equipment and improve their tactical and technical utilization. Preparation of qualified officers who can offer technical consultations to Armed Forces authorities.
+Cooperation with other departments to plan and develop the technical and engineering education to ensure the best quality of the scientific and technical information meeting the current and future needs of the Armed Forces.
+Evaluation of the scientific degrees and equivalent studies in engineering sciences from foreign universities in cooperation with the ministry of higher education and recommendation for scientific titles.
+
+    </string>
+
+    <string name="iugrc_brief">
+    The IUGRC aims to provide undergraduate engineering students from various
+    specializations/majors with the opportunity to present their research work
+    on the latest engineering applications. Students at all levels of undergraduate
+    are invited to participate to gain hands on experience. Evaluations will be based
+    on the originality of the work presented, the quality of the analytical and experimental
+    work as well as the level of technical presentation .
+
+    In order to motivate the spirit of innovation and scientific research among the engineering students,
+    the Ministry of Defense invites undergraduate students from engineering faculties/schools all over the
+    world to demonstrate their skills, talent and innovated ideas in engineering sciences. The IUGRC activities
+    are intended to be forum that facilitate, and promote communication and cooperation among participants.
+    Participating in this event will help you expand your knowledge, network, discuss challenges, and share ideas
+    during technical sessions and networking breaks.
+</string>
+
+    <string name="amme_brief">
+        The AMME is regularly scheduled. The conference offers scientific sessions,\n
+        separate exhibition and seminars that will be devoted to the presentation  \n
+        of latest achievements in mechanical applications
+    </string>
+
+    <string name="iceeing_brief">
+        The ICEENG is regularly scheduled. The conference offers scientific sessions,\n
+        separate exhibition and seminars that will be devoted to the presentation \n
+        of latest achievements in electrical applications
+    </string>
+    
+    <string name="icccae_brief">
+        The ICCAE is regularly scheduled. The conference offers scientific sessions,\n
+        separate exhibition and seminars that will be devoted to the presentation \n
+        of latest achievements in civil and architecture engineering applications
+    </string>
+
+    <string name="icee_brief">
+The ICEE is regularly scheduled. The conference offers scientific sessions,\n
+        separate exhibition and seminars that will be devoted to the presentation \n
+        of latest achievements in chemical and environmental engineering applications
+    </string>
+
+    <string name="icmep_brief">
+The ICMEP is regularly scheduled. The conference offers scientific sessions,\n
+        separate exhibition and seminars that will be devoted to the presentation \n
+        of latest achievements in Mathematics and Engineering Physics applications.
+    </string>
+
+    <string name="asat_brief">
+The ASAT is held every two years. The conference is accompanied by international \n
+        exhibition where local and international companies present their products \n
+        in the field of aerospace sciences and aviation technologies
+    </string>
+
+
+
+
+
+</resources>
