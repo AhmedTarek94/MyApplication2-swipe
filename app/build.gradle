@@ -32,7 +32,7 @@ dependencies {
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    compile 'com.github.codekidX:storage-chooser:2.0.3'
+    compile 'com.nbsp:library:1.8'
 
     compile 'com.bogdwellers:pinchtozoom:0.1'
 
@@ -40,9 +40,7 @@ dependencies {
     compile 'com.google.firebase:firebase-database:11.0.4'
 }
 
-repositories {
-    maven { url "https://jitpack.io" }
-}
+
 
 
 apply plugin: 'com.google.gms.google-services'

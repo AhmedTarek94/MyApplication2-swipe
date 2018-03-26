@@ -1,14 +1,14 @@
 package com.example.ltc_pc.myapplication;
 
-public class user {
+public class User {
 
     private String name;
     private String email;
     private double id;
     private double mob;
-    private double univ;
+    private String univ;
 
-    public user (String name,String email,double id,double mob,double univ)
+    public User(String name, String email, double id, double mob, String univ)
     {
         this.name= name;
         this.email=email ;
@@ -18,13 +18,13 @@ public class user {
 
     }
 
-    public user ( )
+    public User( )
     {
         this.name= "T";
         this.email="Sh" ;
         this.id= 294;
         this.mob=010 ;
-        this.univ= 84;
+        this.univ= "MTC";
 
     }
 
@@ -42,7 +42,7 @@ public class user {
     public void setMob(int mob)
     {this.mob=mob;}
 
-    public void setUniv(int univ)
+    public void setUniv(String univ)
     {this.univ=univ;}
 //////////////////////////////
     public String getName()
@@ -54,7 +54,7 @@ public class user {
     public double getID()
     {return id;}
 
-    public double getUniv()
+    public String getUniv()
     {return univ;}
 
     public double getMob()

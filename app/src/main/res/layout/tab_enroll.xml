@@ -65,14 +65,6 @@
                 android:layout_marginBottom="20sp"
                 android:hint="ID number" />
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20sp"
-                android:text="University"
-                android:textSize="18sp"/>
-
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_marginBottom="20sp"
