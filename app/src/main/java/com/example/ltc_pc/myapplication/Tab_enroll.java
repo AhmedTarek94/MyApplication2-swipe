@@ -1,8 +1,12 @@
 package com.example.ltc_pc.myapplication;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -28,29 +32,40 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.nbsp.materialfilepicker.MaterialFilePicker;
 import com.nbsp.materialfilepicker.ui.FilePickerActivity;
+import com.obsez.android.lib.filechooser.ChooserDialog;
 
+
+import java.io.File;
 import java.util.regex.Pattern;
 
 import static android.app.Activity.RESULT_OK;
 
-public class Tab_enroll extends Fragment implements View.OnClickListener,AdapterView.OnItemSelectedListener {
+public class Tab_enroll extends Fragment implements View.OnClickListener/*,AdapterView.OnItemSelectedListener */ {
 
-    private  FirebaseDatabase database;
-    DatabaseReference users;
+    private FirebaseDatabase database;
+    private DatabaseReference users;
+    private StorageReference user_file;
 
-    private Spinner spinner;
-    private static final String[]paths = {"University : ","Cairo", "Tanta", "MTC"};
 
-    private double uni=0;
+    //private Spinner spinner;
+    //private static final String[]paths = {"Cairo", "Tanta", "MTC"};
+
 
     private TextView txt_name;
     private TextView txt_email;
     private TextView txt_mob;
-    private String file=null;
+    private String file = null;
+    private TextView view_path;
 
 
     public static frag_parts_mtc newInstance(int position) {
@@ -58,7 +73,6 @@ public class Tab_enroll extends Fragment implements View.OnClickListener,Adapter
         Bundle args = new Bundle();
         args.putInt("position", position);
         fragment.setArguments(args);
-
 
 
         return fragment;
@@ -84,10 +98,12 @@ public class Tab_enroll extends Fragment implements View.OnClickListener,Adapter
         View view = inflater.inflate(R.layout.tab_enroll, container, false);
 
 
-        Button btn_submit=(Button)view.findViewById(R.id.btn_submit);
-        Button btn_file=(Button)view.findViewById(R.id.btn_file);
+        // view_path=(TextView)view.findViewById(R.id.view_path);
+        Button btn_submit = (Button) view.findViewById(R.id.btn_submit);
+        Button btn_file = (Button) view.findViewById(R.id.btn_file);
         btn_submit.setOnClickListener(this);
         btn_file.setOnClickListener(this);
+
 
         database = FirebaseDatabase.getInstance();
 
@@ -95,13 +111,13 @@ public class Tab_enroll extends Fragment implements View.OnClickListener,Adapter
         //this code for keep posts even app offline until the app online again
         users.keepSynced(true);
 
-        spinner = (Spinner)view.findViewById(R.id.spinner);
-        ArrayAdapter<String>adapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item,paths);
+        // spinner = (Spinner)view.findViewById(R.id.spinner);
+        // ArrayAdapter<String>adapter = new ArrayAdapter<String>(getActivity(),
+        //    android.R.layout.simple_spinner_item,paths);
 
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+        //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // spinner.setAdapter(adapter);
+        //spinner.setOnItemSelectedListener(this);
 
         return view;
     }
@@ -116,7 +132,7 @@ public class Tab_enroll extends Fragment implements View.OnClickListener,Adapter
             case (R.id.btn_submit): {
                 //Upload
 
-
+                //uploadfile();
 
 
                 //Submit User
@@ -124,15 +140,16 @@ public class Tab_enroll extends Fragment implements View.OnClickListener,Adapter
                 //users.push().setValue(u1);
 
 
-                Toast.makeText(getActivity(),"Done",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Done", Toast.LENGTH_LONG).show();
             }
 
-            case (R.id.btn_file):
-            {
+            case (R.id.btn_file): {
                 checkPermissionsAndOpenFilePicker();
 
+
             }
-            default:break;
+            default:
+                break;
 
         }
 
@@ -164,6 +181,7 @@ public class Tab_enroll extends Fragment implements View.OnClickListener,Adapter
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openFilePicker();
+
                 } else {
                     showError();
                 }
@@ -172,13 +190,27 @@ public class Tab_enroll extends Fragment implements View.OnClickListener,Adapter
     }
 
     private void openFilePicker() {
-        new MaterialFilePicker()
+       /* new MaterialFilePicker()
                 .withActivity(getActivity())
-                // .withFilter(Pattern.compile(".*\\.txt$pdf$png$jpeg"))
+                .withFilter(Pattern.compile(".*\\.pdf$"))
                 .withRequestCode(1000)
                 .withHiddenFiles(true)
-                .withTitle("Sample title")
-                .start();
+                .withTitle("Choose your paper")
+                .start();*/
+        new ChooserDialog().with(getActivity())
+                .withStartFile("/sdcard/")
+                .withFilter(false, true, "pdf", "docx", "pptx")
+                .withChosenListener(new ChooserDialog.Result() {
+                    @Override
+                    public void onChoosePath(String path, File pathFile) {
+                        Toast.makeText(getActivity(), "FILE: " + path, Toast.LENGTH_SHORT).show();
+
+                        file = path;
+
+                    }
+                })
+                .build()
+                .show();
     }
 
     @Override
@@ -186,39 +218,43 @@ public class Tab_enroll extends Fragment implements View.OnClickListener,Adapter
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1000 && resultCode == RESULT_OK) {
-            String path = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
+            file = data.getStringExtra(FilePickerActivity.RESULT_FILE_PATH);
 
-            if (path != null) {
-                Log.d("Path: ", path);
-                Toast.makeText(getActivity(), "Picked file: " + path, Toast.LENGTH_LONG).show();
+
+            Toast.makeText(getActivity(), "Picked file: " + file, Toast.LENGTH_LONG).show();
+
+            if (file != null) {
+                Log.d("Path: ", file);
+
             }
         }
     }
 
-
-    //University selection
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-        switch (position) {
-            case 0:
-
-                break;
-            case 1:
-
-                break;
-            case 2:
-
-                break;
-
-            default:break;
-
-        }
+    private void uploadfile(String ur) {
+        user_file = FirebaseStorage.getInstance().getReference();
+        Uri file = Uri.fromFile(new File(file));
 
 
-    }
+        user_file.putFile(file)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get a URL to the uploaded content
+                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        // ...
+                    }
+                });
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
 
     }}
+
+
+
+
 
