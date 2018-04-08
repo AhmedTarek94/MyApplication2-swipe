@@ -54,7 +54,9 @@ public class Tab_enroll extends Fragment implements View.OnClickListener/*,Adapt
 
     private FirebaseDatabase database;
     private DatabaseReference users;
+    private FirebaseStorage storage;
     private StorageReference user_file;
+    TextView txt_test;
 
 
     //private Spinner spinner;
@@ -64,7 +66,8 @@ public class Tab_enroll extends Fragment implements View.OnClickListener/*,Adapt
     private TextView txt_name;
     private TextView txt_email;
     private TextView txt_mob;
-    private String file = null;
+    public String fileloc = null;
+    public Uri fileuri;
     private TextView view_path;
 
 
@@ -103,11 +106,16 @@ public class Tab_enroll extends Fragment implements View.OnClickListener/*,Adapt
         Button btn_file = (Button) view.findViewById(R.id.btn_file);
         btn_submit.setOnClickListener(this);
         btn_file.setOnClickListener(this);
+        txt_test=(TextView)view.findViewById(R.id.txt_test);
 
 
         database = FirebaseDatabase.getInstance();
-
         users = database.getReference("Users:");
+
+        storage = FirebaseStorage.getInstance();
+        user_file = storage.getReference("Files");
+
+
         //this code for keep posts even app offline until the app online again
         users.keepSynced(true);
 
@@ -132,8 +140,11 @@ public class Tab_enroll extends Fragment implements View.OnClickListener/*,Adapt
             case (R.id.btn_submit): {
                 //Upload
 
-                //uploadfile();
-
+                try {
+                    uploadfile();
+                }
+                catch (Exception e)
+                {}
 
                 //Submit User
 
@@ -144,8 +155,11 @@ public class Tab_enroll extends Fragment implements View.OnClickListener/*,Adapt
             }
 
             case (R.id.btn_file): {
-                checkPermissionsAndOpenFilePicker();
-
+                try {
+                    checkPermissionsAndOpenFilePicker();
+                }
+                catch (Exception e)
+                {}
 
             }
             default:
@@ -198,14 +212,17 @@ public class Tab_enroll extends Fragment implements View.OnClickListener/*,Adapt
                 .withTitle("Choose your paper")
                 .start();*/
         new ChooserDialog().with(getActivity())
-                .withStartFile("/sdcard/")
+                .withStartFile("/")
                 .withFilter(false, true, "pdf", "docx", "pptx")
                 .withChosenListener(new ChooserDialog.Result() {
                     @Override
                     public void onChoosePath(String path, File pathFile) {
                         Toast.makeText(getActivity(), "FILE: " + path, Toast.LENGTH_SHORT).show();
 
-                        file = path;
+                        fileloc = path;
+                        txt_test.setText(path);
+
+                        fileuri=Uri.fromFile(pathFile);
 
                     }
                 })
@@ -213,7 +230,39 @@ public class Tab_enroll extends Fragment implements View.OnClickListener/*,Adapt
                 .show();
     }
 
-    @Override
+
+
+   private void uploadfile() {
+        user_file = FirebaseStorage.getInstance().getReference();
+
+
+        user_file.putFile(fileuri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get a URL to the uploaded content
+                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                        Toast.makeText(getActivity(), "FILE: " + downloadUrl, Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        // ...
+                        Toast.makeText(getActivity(),"Failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+    }}
+
+
+
+
+
+ /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -228,33 +277,4 @@ public class Tab_enroll extends Fragment implements View.OnClickListener/*,Adapt
 
             }
         }
-    }
-
-    private void uploadfile(String ur) {
-        user_file = FirebaseStorage.getInstance().getReference();
-        Uri file = Uri.fromFile(new File(file));
-
-
-        user_file.putFile(file)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        // Get a URL to the uploaded content
-                        Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-                        // ...
-                    }
-                });
-
-
-    }}
-
-
-
-
-
+    }}*/
